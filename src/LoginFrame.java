@@ -57,7 +57,7 @@ public class LoginFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
 
-        jPanel1.setBackground(new java.awt.Color(174, 195, 174));
+        jPanel1.setBackground(new java.awt.Color(228, 228, 208));
 
         jPanel2.setBackground(new java.awt.Color(174, 195, 174));
 
