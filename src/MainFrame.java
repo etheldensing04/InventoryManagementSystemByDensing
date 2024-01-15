@@ -2340,6 +2340,10 @@ public final class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_payBtnActionPerformed
 
     private void printBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printBtnActionPerformed
+        recieptTextArea.setText("");
+        getTotalTextField.setText("");
+        receivedTextField.setText("");
+        getBalanceTextField.setText("");
         System.out.println(recieptTextArea.getText());
     }//GEN-LAST:event_printBtnActionPerformed
 
