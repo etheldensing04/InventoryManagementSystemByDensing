@@ -2336,6 +2336,7 @@ public final class MainFrame extends javax.swing.JFrame {
         String formattedBalance = "₱ " + decimalFormat.format(balance);
 
         getBalanceTextField.setText(formattedBalance);
+        model.setRowCount(0);
     }//GEN-LAST:event_payBtnActionPerformed
 
     private void printBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printBtnActionPerformed
