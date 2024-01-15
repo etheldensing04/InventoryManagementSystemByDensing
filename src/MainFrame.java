@@ -2,12 +2,15 @@ import com.formdev.flatlaf.FlatLightLaf;
 import customComponents.ImageAvatar;
 import java.awt.Desktop;
 import java.awt.event.KeyEvent;
+import java.awt.print.PrinterException;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.text.DecimalFormat;
 import java.util.AbstractMap;
 import java.util.EventObject;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.Icon;
@@ -2345,6 +2348,12 @@ public final class MainFrame extends javax.swing.JFrame {
         receivedTextField.setText("");
         getBalanceTextField.setText("");
         System.out.println(recieptTextArea.getText());
+        try {
+            recieptTextArea.print();
+        } catch (PrinterException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }//GEN-LAST:event_printBtnActionPerformed
 
     private void receivedTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_receivedTextFieldKeyReleased
