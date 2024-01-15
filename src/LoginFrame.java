@@ -57,7 +57,7 @@ public class LoginFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
 
-        jPanel1.setBackground(new java.awt.Color(228, 228, 208));
+        jPanel1.setBackground(new java.awt.Color(174, 195, 174));
 
         jPanel2.setBackground(new java.awt.Color(174, 195, 174));
 
@@ -305,28 +305,19 @@ public class LoginFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPasswordField getPassword;
-    private javax.swing.JPasswordField getPassword1;
     private javax.swing.JTextField getUserName;
-    private javax.swing.JTextField getUserName1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JButton loginBtn;
-    private javax.swing.JButton loginBtn1;
     private PanelRound panelRound1;
     private PanelRound panelRound2;
     private PanelRound panelRound3;
-    private PanelRound panelRound4;
-    private PanelRound panelRound5;
     private PanelRound panelRound6;
     private javax.swing.JCheckBox showPassword;
-    private javax.swing.JCheckBox showPassword1;
     // End of variables declaration//GEN-END:variables
 }

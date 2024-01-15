@@ -78,7 +78,7 @@
     <Container class="javax.swing.JPanel" name="jPanel1">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="d0" green="e4" red="e4" type="rgb"/>
+          <Color blue="ae" green="c3" red="ae" type="rgb"/>
         </Property>
       </Properties>
 
