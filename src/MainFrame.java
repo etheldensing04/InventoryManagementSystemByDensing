@@ -7,7 +7,9 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.AbstractMap;
+import java.util.Date;
 import java.util.EventObject;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,13 +25,15 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.table.DefaultTableModel;
 import myclass.Database;
+import myclass.DbColumns;
 import myclass.Helper;
+import myclass.ReportManagement;
 
-//author Josuan
+//author
 public final class MainFrame extends javax.swing.JFrame {
     private final Database mydb = new Database(this);
     private final static String[] listOfGenders = {"Male","Female"};
-    
+    private final ReportManagement reportManagement = new ReportManagement(this);
     public MainFrame() {
         initComponents();
         A_1();
@@ -300,12 +304,12 @@ public final class MainFrame extends javax.swing.JFrame {
         jLabel34 = new javax.swing.JLabel();
         reportPanel = new javax.swing.JPanel();
         jScrollPane8 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        reportTable = new javax.swing.JTable();
         panelRound4 = new PanelRound();
-        jButton2 = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
-        jDateChooser2 = new com.toedter.calendar.JDateChooser();
+        reportSearchBtn = new javax.swing.JButton();
+        searchReportComboBox = new javax.swing.JComboBox<>();
+        fromDateChooser = new com.toedter.calendar.JDateChooser();
+        toDateChooser = new com.toedter.calendar.JDateChooser();
         jButton3 = new javax.swing.JButton();
         jLabel22 = new javax.swing.JLabel();
         jLabel35 = new javax.swing.JLabel();
@@ -1413,18 +1417,15 @@ public final class MainFrame extends javax.swing.JFrame {
 
         reportPanel.setBackground(new java.awt.Color(174, 195, 174));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        reportTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+
             }
         ));
-        jScrollPane8.setViewportView(jTable1);
+        jScrollPane8.setViewportView(reportTable);
 
         panelRound4.setBackground(new java.awt.Color(228, 228, 208));
         panelRound4.setRoundBottomLeft(50);
@@ -1432,13 +1433,18 @@ public final class MainFrame extends javax.swing.JFrame {
         panelRound4.setRoundTopLeft(50);
         panelRound4.setRoundTopRight(50);
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/search.png"))); // NOI18N
-        jButton2.setText("SEARCH");
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        reportSearchBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/search.png"))); // NOI18N
+        reportSearchBtn.setText("SEARCH");
+        reportSearchBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                reportSearchBtnActionPerformed(evt);
+            }
+        });
+
+        searchReportComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sales Report", "Inventory Report", "Out of Stocks", "Top Sales", "Top Sellers" }));
+        searchReportComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchReportComboBoxActionPerformed(evt);
             }
         });
 
@@ -1458,16 +1464,16 @@ public final class MainFrame extends javax.swing.JFrame {
             .addGroup(panelRound4Layout.createSequentialGroup()
                 .addGap(39, 39, 39)
                 .addGroup(panelRound4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(reportSearchBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(searchReportComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(59, 59, 59)
                 .addGroup(panelRound4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel22, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel35, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelRound4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(fromDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(toDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(106, 106, 106)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(90, 90, 90))
@@ -1478,15 +1484,15 @@ public final class MainFrame extends javax.swing.JFrame {
                 .addGap(16, 16, 16)
                 .addGroup(panelRound4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fromDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(panelRound4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(reportSearchBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel22)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panelRound4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel35)
-                    .addComponent(jDateChooser2, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
-                    .addComponent(jComboBox1))
+                    .addComponent(toDateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
+                    .addComponent(searchReportComboBox))
                 .addGap(18, 18, 18))
         );
 
@@ -2584,9 +2590,132 @@ public final class MainFrame extends javax.swing.JFrame {
         openImage(imageAvatar1.getIcon());
     }//GEN-LAST:event_imageAvatar1MouseClicked
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void searchReportComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchReportComboBoxActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    }//GEN-LAST:event_searchReportComboBoxActionPerformed
+
+    DefaultTableModel reportTableModel;
+
+    String[][] cols = {{"Category","Item Name","Description","Date","Price","Quantity","Total","Seller Firstnane","Seller Lastname"},
+                        {"Product ID","Category","Product Name","Description","Quantity","Retail Price","Date of Purchase"},
+                        {"Product Name","Date out of stock"},{"Category","Item Name","Description","Date","Price","Quantity","Total"},
+                        {"Item Name","Quantity","Total","Date of Purchase"},{"Seller Firstnane","Seller Lastname","Quantity","Monthly"}};
+    
+    private void reportSearchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reportSearchBtnActionPerformed
+       try{
+            Object selectedItem = searchReportComboBox.getSelectedItem();
+            Date fromDate = fromDateChooser.getDate();
+            Date toDate = toDateChooser.getDate();
+
+            if(fromDate != null && toDate != null){
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+                Object formattedFromDate = dateFormat.format(fromDate);
+                Object formattedToDate = dateFormat.format(toDate);
+
+                if(selectedItem.equals(DbColumns.REPORTOPTIONS.getValues()[0])){
+                    reportTableModel = new DefaultTableModel(null,cols[0]){
+                        @Override
+                        public boolean isCellEditable(int row, int column){
+                            return false;
+                        }
+                    };
+                    reportTable.setModel(reportTableModel);
+                    reportManagement.LoadSalesData(reportTable, formattedFromDate, formattedToDate);
+                }else if(selectedItem.equals(DbColumns.REPORTOPTIONS.getValues()[1])){
+                    reportTableModel = new DefaultTableModel(null,cols[1]){
+                        @Override
+                        public boolean isCellEditable(int row, int column){
+                            return false;
+                        }
+                    };
+                    reportTable.setModel(reportTableModel);      
+                    reportManagement.DisplayInventoryData(reportTable,formattedFromDate,formattedToDate);
+                }else if(selectedItem.equals(DbColumns.REPORTOPTIONS.getValues()[2])){
+                    reportTableModel = new DefaultTableModel(null,cols[1]){
+                        @Override
+                        public boolean isCellEditable(int row, int column){
+                            return false;
+                        }
+                    };
+                    reportTable.setModel(reportTableModel);    
+                    reportManagement.LoadOutOfStocks(reportTable,formattedFromDate,formattedToDate);
+                }else if(selectedItem.equals(DbColumns.REPORTOPTIONS.getValues()[3])){
+                    reportTableModel = new DefaultTableModel(null,cols[4]){
+                        @Override
+                        public boolean isCellEditable(int row, int column){
+                            return false;
+                        }
+                    };
+                    reportTable.setModel(reportTableModel);    
+                    reportManagement.LoadTopSales(reportTable,formattedFromDate,formattedToDate);
+                }else if(selectedItem.equals(DbColumns.REPORTOPTIONS.getValues()[4])){
+                    reportTableModel = new DefaultTableModel(null,cols[5]){
+                        @Override
+                        public boolean isCellEditable(int row, int column){
+                            return false;
+                        }
+                    };
+                    reportTable.setModel(reportTableModel); 
+                    reportManagement.LoadTopSellers(reportTable,formattedFromDate,formattedToDate);
+                }
+
+            }else{
+                if(selectedItem.equals(DbColumns.REPORTOPTIONS.getValues()[0])){
+                    reportTableModel = new DefaultTableModel(null,cols[0]){
+                        @Override
+                        public boolean isCellEditable(int row, int column){
+                            return false;
+                        }
+                    };
+                    reportTable.setModel(reportTableModel);      
+                    reportManagement.DisplayInventoryData(reportTable);
+                    reportManagement.LoadSalesData(reportTable);
+                }if(selectedItem.equals(DbColumns.REPORTOPTIONS.getValues()[1])){
+                    reportTableModel = new DefaultTableModel(null,cols[1]){
+                        @Override
+                        public boolean isCellEditable(int row, int column){
+                            return false;
+                        }
+                    };
+                    reportTable.setModel(reportTableModel);      
+                    reportManagement.DisplayInventoryData(reportTable);
+                }else if(selectedItem.equals(DbColumns.REPORTOPTIONS.getValues()[2])){
+                    reportTableModel = new DefaultTableModel(null,cols[1]){
+                        @Override
+                        public boolean isCellEditable(int row, int column){
+                            return false;
+                        }
+                    };
+                    reportTable.setModel(reportTableModel);    
+                    reportManagement.LoadOutOfStocks(reportTable);
+                }else if(selectedItem.equals(DbColumns.REPORTOPTIONS.getValues()[3])){
+                    reportTableModel = new DefaultTableModel(null,cols[4]){
+                        @Override
+                        public boolean isCellEditable(int row, int column){
+                            return false;
+                        }
+                    };
+                    reportTable.setModel(reportTableModel); 
+                    reportManagement.LoadTopSales(reportTable);
+                }else if(selectedItem.equals(DbColumns.REPORTOPTIONS.getValues()[4])){
+                    reportTableModel = new DefaultTableModel(null,cols[5]){
+                        @Override
+                        public boolean isCellEditable(int row, int column){
+                            return false;
+                        }
+                    };
+                    reportTable.setModel(reportTableModel); 
+                    reportManagement.LoadTopSellers(reportTable);
+                }
+
+            }
+        }catch (ArrayIndexOutOfBoundsException e) {
+            JOptionPane.showMessageDialog(this, "An unexpected error occurred. Please try again.", "Report", JOptionPane.ERROR_MESSAGE);
+        } catch (NullPointerException e) {
+            JOptionPane.showMessageDialog(this, "An unexpected error occurred. Please try again.", "Report", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_reportSearchBtnActionPerformed
 
     private void setSelectedItem() {
         try{
@@ -2654,6 +2783,7 @@ public final class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton deleteUserBtn;
     private javax.swing.JTextField descriptionTextField;
     private javax.swing.JSpinner discountSpinner;
+    private com.toedter.calendar.JDateChooser fromDateChooser;
     private javax.swing.JLabel fullNameLabel;
     private javax.swing.JLabel genderLabel;
     private javax.swing.JTextField getBalanceTextField;
@@ -2684,11 +2814,7 @@ public final class MainFrame extends javax.swing.JFrame {
     private javax.swing.JTextField invoiceTextField;
     private javax.swing.JTextField itemNameTextField;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
-    private com.toedter.calendar.JDateChooser jDateChooser2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -2746,7 +2872,6 @@ public final class MainFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel logoutLabel;
     private javax.swing.JLabel logoutLabel1;
     private javax.swing.JLayeredPane mainLayeredPane;
@@ -2772,6 +2897,8 @@ public final class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton removeCartBtn;
     private javax.swing.JLabel reportLabel;
     private javax.swing.JPanel reportPanel;
+    private javax.swing.JButton reportSearchBtn;
+    private javax.swing.JTable reportTable;
     private javax.swing.JLabel returnItemLabel;
     private javax.swing.JLabel returnItemLabel1;
     private javax.swing.JPanel returnItemPanel;
@@ -2781,9 +2908,11 @@ public final class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel salesPanel;
     private javax.swing.JTable salesTable1;
     private javax.swing.JTable salesTable2;
+    private javax.swing.JComboBox<String> searchReportComboBox;
     private javax.swing.JLabel soldOldLabel;
     private javax.swing.JLabel soldTotayLabel;
     private javax.swing.JCheckBox termServiceCheckBox;
+    private com.toedter.calendar.JDateChooser toDateChooser;
     private javax.swing.JLabel todaysalesLabel;
     private javax.swing.JLabel totalProductsLabel;
     private javax.swing.JLabel totalSalesLabel;
