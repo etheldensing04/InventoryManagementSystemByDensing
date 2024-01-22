@@ -1450,6 +1450,11 @@ public final class MainFrame extends javax.swing.JFrame {
 
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/printer_1.png"))); // NOI18N
         jButton3.setText("PRINT");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jLabel22.setFont(new java.awt.Font("Calibri Light", 1, 14)); // NOI18N
         jLabel22.setText("FROM DATE: ");
@@ -2716,6 +2721,14 @@ public final class MainFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "An unexpected error occurred. Please try again.", "Report", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_reportSearchBtnActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        try {
+            reportTable.print();
+        } catch (PrinterException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     private void setSelectedItem() {
         try{
